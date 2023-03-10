@@ -26,7 +26,7 @@ pipeline {
       }
     }
   }
-  stages {
+  
         stage("Generate JaCoCo Badge") {
       
         script {
@@ -38,5 +38,5 @@ pipeline {
         }
       }
     }
-       } 
+       
                    
