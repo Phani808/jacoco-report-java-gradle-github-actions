@@ -10,5 +10,10 @@ pipeline {
                 git branch: 'main', url: 'https://github.com/Phani808/jacoco-report-java-gradle-github-actions.git'
         }       
       }
+       stage("Grant execute permission for gradlew") {
+      steps {
+        sh "chmod +x gradlew"
+      }
+    }
    }
 }    
