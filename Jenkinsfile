@@ -20,18 +20,17 @@ pipeline {
         sh "./gradlew test"
       }
     }
-     stage("Run Test Coverage") {
+     stage('Test') {
       steps {
-        sh "./gradlew jacocoTestReport"
+        sh './gradlew clean test jacocoTestReport'
       }
     }
-     post {
+  }
+  post {
     always {
       jacoco(execPattern: '**/build/jacoco/*.exec')
       archiveArtifacts(artifacts: '**/build/jacoco/*.xml')
       junit '**/build/test-results/test/*.xml'
     }
   }
-}
-   }
-   
+} 
