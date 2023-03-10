@@ -25,18 +25,30 @@ pipeline {
         sh './gradlew clean test jacocoTestReport'
       }
     }
-
-     stage('Generate JaCoCo Badge') {
-        steps {
-          script {
-            def jacocoBadgeGenerator = docker.image("cicirello/jacoco-badge-generator:v2")
-            jacocoBadgeGenerator.run([
-              "--generate-branches-badge", "true",
-              "--jacoco-csv-file", "build/reports/jacoco/test/jacocoTestReport.csv"
-            ])
-          }
-        }
+    stage('Build') {
+      steps {
+        sh './gradlew clean build'
       }
+    }
+    stage('Archive') {
+      steps {
+        archiveArtifacts 'build/libs/*.jar'
+      }
+    }
+  }
+}
+
+    // stage('Generate JaCoCo Badge') {
+      //  steps {
+        //  script {
+        //    def jacocoBadgeGenerator = docker.image("cicirello/jacoco-badge-generator:v2")
+         //   jacocoBadgeGenerator.run([
+          //    "--generate-branches-badge", "true",
+          //    "--jacoco-csv-file", "build/reports/jacoco/test/jacocoTestReport.csv"
+         //   ])
+        //  }
+     //   }
+     // }
   }
 }
 
