@@ -26,11 +26,22 @@ pipeline {
       }
     }
   }
-  post {
-    always {
-      jacoco(execPattern: '**/build/jacoco/*.exec')
-      archiveArtifacts(artifacts: '**/build/jacoco/*.xml')
-      junit '**/build/test-results/test/*.xml'
-    }
-  }
-} 
+  stages {
+        stage('Generate JaCoCo Badge') {
+            steps {
+                // Use the cicirello/jacoco-badge-generator plugin to generate the badge.
+                // You can adjust the plugin version to suit your needs.
+                // Note that this plugin requires that you have JaCoCo set up in your project.
+                // Refer to the plugin documentation for more information.
+                steps {
+                    script {
+                        def jacocoCsvFile = "build/reports/jacoco/test/jacocoTestReport.csv"
+                        def generateBranchesBadge = true
+
+                        sh "docker run --rm -v $(pwd):/app cicirello/jacoco-badge-generator:v2 --input $jacocoCsvFile --branches $generateBranchesBadge"
+                    }
+                }
+            }
+        }
+       } 
+           }           |   
