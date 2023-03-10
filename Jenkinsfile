@@ -1,18 +1,14 @@
 pipeline {
    agent any
-    options {
-    skipDefaultCheckout()
-  }
+   options {
+         buildDiscarder logRotator(artifactDaysToKeepStr: '', artifactNumToKeepStr: '', daysToKeepStr: '', numToKeepStr: '3')
+         }
 
    stages {
-    stage("Checkout") {
-      steps {
-        checkout([
-          $class: 'GitSCM',
-          branches: [[name: "main"]],
-          userRemoteConfigs: [[url: "$https://github.com/Phani808/jacoco-report-java-gradle-github-actions.git"]]
-        ])
+            stage('Checkout SCM') {
+                steps {
+                git branch: 'main', url: 'https://github.com/Phani808/jacoco-report-java-gradle-github-actions.git'
+        }       
       }
-    }
    }
 }    
