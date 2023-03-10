@@ -39,6 +39,7 @@ pipeline {
                         def generateBranchesBadge = true
 
                         sh "docker run --rm -v $(pwd):/app cicirello/jacoco-badge-generator:v2 --input $jacocoCsvFile --branches $generateBranchesBadge"
+
                     }
                 }
             }
