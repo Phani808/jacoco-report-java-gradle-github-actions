@@ -27,9 +27,9 @@ pipeline {
     }
   }
   
-        stage("Generate JaCoCo Badge") {
+        stage('Generate JaCoCo Badge') {
       
-        script {
+        steps {
           def jacocoBadgeGenerator = docker.image("cicirello/jacoco-badge-generator:v2")
           jacocoBadgeGenerator.run([
             "--generate-branches-badge", "true",
