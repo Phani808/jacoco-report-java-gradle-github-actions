@@ -15,5 +15,10 @@ pipeline {
         sh "chmod +x gradlew"
       }
     }
+     stage("Run Tests") {
+      steps {
+        sh "./gradlew test"
+      }
+    }
    }
 }    
