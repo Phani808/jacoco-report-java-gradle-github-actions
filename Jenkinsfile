@@ -25,16 +25,13 @@ pipeline {
         sh "./gradlew jacocoTestReport"
       }
     }
-     stage("Generate JaCoCo Badge") {
-      steps {
-        script {
-          def jacocoBadgeGenerator = docker.image("cicirello/jacoco-badge-generator:v2")
-          jacocoBadgeGenerator.run([
-            "--generate-branches-badge", "true",
-            "--jacoco-csv-file", "build/reports/jacoco/test/jacocoTestReport.csv"
-          ])
-        }
-      }
+     ost {
+    always {
+      jacoco(execPattern: '**/build/jacoco/*.exec')
+      archiveArtifacts(artifacts: '**/build/jacoco/*.xml')
+      junit '**/build/test-results/test/*.xml'
     }
+  }
+}
    }
-}    
+   
