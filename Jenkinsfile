@@ -25,7 +25,7 @@ pipeline {
         sh "./gradlew jacocoTestReport"
       }
     }
-     ost {
+     post {
     always {
       jacoco(execPattern: '**/build/jacoco/*.exec')
       archiveArtifacts(artifacts: '**/build/jacoco/*.xml')
